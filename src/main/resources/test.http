@@ -1,7 +1,35 @@
-POST localhost:8080/auth/login
+POST localhost:8081/auth/login
 Content-Type: application/json
 
 {
   "username": "user",
   "password": "osk"
+}
+
+###
+POST localhost:8081/menu
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI5MDE2MTYsImV4cCI6MTY2MjkwNTIxNiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjoxfQ.eANWN_j3wlWeqQRhmJUopFHCvGzFx46xVebiBw9Wn0A
+
+{
+  "name": "info"
+}
+
+###
+PUT localhost:8081/menu/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI5MDE2MTYsImV4cCI6MTY2MjkwNTIxNiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjoxfQ.eANWN_j3wlWeqQRhmJUopFHCvGzFx46xVebiBw9Wn0A
+
+{
+  "name": "links"
+}
+
+###
+POST localhost:8081/categoty
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI5MDE2MTYsImV4cCI6MTY2MjkwNTIxNiwiaXNzIjoiTWF6Z2kgcHJvZHVjdGlvbiIsImlkIjoxfQ.eANWN_j3wlWeqQRhmJUopFHCvGzFx46xVebiBw9Wn0A
+
+{
+  "name": "userlar bolimi",
+  "menuId": 1
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -40,4 +41,7 @@ public class ProfileEntity {
 
     @Column(nullable = false)
     private Boolean visible = Boolean.TRUE;
+
+    @Column(nullable = false)
+    private LocalDateTime createdDate = LocalDateTime.now();
 }

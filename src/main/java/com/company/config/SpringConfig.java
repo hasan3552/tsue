@@ -46,6 +46,8 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/auth/login").permitAll()
+                .antMatchers(  "/category/**").hasRole("ADMIN")
+                .antMatchers(  "/menu/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.cors().disable().csrf().disable();
