@@ -28,11 +28,16 @@ public class AuthService {
 
         Authentication authenticate = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authDTO.getUsername(),authDTO.getPassword()));
+
         CustomUserDetails user = (CustomUserDetails) authenticate.getPrincipal();
         ProfileEntity profile = user.getProfile();
         ProfileDTO dto = new ProfileDTO();
         dto.setUsername(profile.getUsername());
         dto.setJwt(JwtUtil.encode(profile.getId()));
+        dto.setCourse(profile.getCourse());
+        dto.setName(profile.getName());
+        dto.setRole(profile.getRole());
+        dto.setSurname(profile.getSurname());
 
 
         return dto;

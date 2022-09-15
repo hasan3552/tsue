@@ -1,5 +1,6 @@
 package com.company.config;
 
+import com.company.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,8 +47,9 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers(  "/category/**").hasRole("ADMIN")
-                .antMatchers(  "/menu/**").hasRole("ADMIN")
+                .antMatchers("/category/**").hasRole("ADMIN")
+                .antMatchers("/menu/**").hasRole("ADMIN")
+                .antMatchers("/profile/mod/**").hasRole("MODERATOR")
                 .anyRequest().authenticated()
                 .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.cors().disable().csrf().disable();
@@ -55,8 +57,20 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+//        return NoOpPasswordEncoder.getInstance();
+//        return new BCryptPasswordEncoder();
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence rawPassword) {
+                return rawPassword.toString();
+            }
 
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                String md5 = MD5Util.getMd5(rawPassword.toString());
+                return md5.equals(encodedPassword);
+            }
+        };
 
     }
 
