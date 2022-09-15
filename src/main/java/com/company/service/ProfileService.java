@@ -41,7 +41,6 @@ public class ProfileService {
             return new ResponseDTO(-1,"This user already exist");
         }
 
-
         ProfileEntity entity = new ProfileEntity();
         entity.setVisible(true);
         entity.setStatus(ProfileStatus.ACTIVE);
