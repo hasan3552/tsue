@@ -1,7 +1,5 @@
 package com.company.entity;
 
-import com.company.enums.Career;
-import com.company.enums.ProfileStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,24 +9,17 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "employee")
-public class EmployeeEntity extends User{
+@Table(name = "student")
+public class StudentEntity extends User {
 
-    @Column(name = "career")
-    @Enumerated(EnumType.STRING)
-    private Career career;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    @Column(name = "email")
-    private String email;
+    @Column
+    private String course;
 
     @Column(name = "birthday")
     private LocalDate birthday;
 
-    @Column(name = "info")
-    private String info;
+    @Column(name = "enter_day")
+    private LocalDate enterDay;
 
     @Column(name = "profile_id")
     private Integer profileId;

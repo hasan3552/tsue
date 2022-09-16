@@ -30,15 +30,6 @@ public class ProfileEntity extends User{
     @Column
     private String middleName;
 
-    @Column
-    private String course;
-
-    @Column(name = "birthday")
-    private LocalDate birthday;
-
-    @Column(name = "enter_day")
-    private LocalDate enterDay;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ProfileRole role;

@@ -1,8 +1,13 @@
 package com.company.service;
 
+import com.company.dto.EmployeeCreateDTO;
 import com.company.dto.ResponseDTO;
+import com.company.dto.StudentCreateDTO;
 import com.company.dto.profile.ProfileCreateDTO;
+import com.company.entity.EmployeeEntity;
 import com.company.entity.ProfileEntity;
+import com.company.entity.StudentEntity;
+import com.company.enums.ProfileRole;
 import com.company.enums.ProfileStatus;
 import com.company.exp.BadRequestException;
 import com.company.exp.ItemNotFoundException;
@@ -20,6 +25,7 @@ import java.util.Optional;
 public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
+
     @Autowired
     @Lazy
     private AttachService attachService;
@@ -33,12 +39,12 @@ public class ProfileService {
         });
     }
 
-    public ResponseDTO create(ProfileCreateDTO dto) {
+    public ProfileEntity create(ProfileCreateDTO dto) {
 
         ProfileEntity profile = getByUsername(dto.getUsername());
 
         if (profile != null){
-            return new ResponseDTO(-1,"This user already exist");
+            throw new BadRequestException("This user already exist");
         }
 
         ProfileEntity entity = new ProfileEntity();
@@ -48,21 +54,50 @@ public class ProfileService {
         entity.setCreatedDate(LocalDateTime.now());
         entity.setRole(dto.getRole());
         entity.setUsername(dto.getUsername());
-        entity.setBirthday(dto.getBirthday());
-        entity.setCourse(dto.getCourse());
-        entity.setEnterDay(dto.getEnterDay());
         entity.setMiddleName(dto.getMiddleName());
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
         entity.setPhotoId(dto.getPhotoId());
 
-        return new ResponseDTO(1,"successfully registration");
+        profileRepository.save(entity);
+
+        return entity;
     }
+    public ProfileEntity createByEmp(EmployeeCreateDTO dto) {
+
+        ProfileCreateDTO profile = new ProfileCreateDTO();
+        profile.setName(dto.getName());
+        profile.setSurname(dto.getSurname());
+        profile.setMiddleName(dto.getMiddleName());
+        profile.setPassword(dto.getPassword());
+        profile.setRole(ProfileRole.ROLE_MODERATOR);
+        profile.setUsername(dto.getUsername());
+        profile.setPhotoId(dto.getAttachId());
+
+        return create(profile);
+      }
 
     private ProfileEntity getByUsername(String username) {
 
         Optional<ProfileEntity> optional = profileRepository.findByUsername(username);
-
         return optional.orElse(null);
+
+    }
+
+
+
+    public ProfileEntity createStudent(StudentCreateDTO dto) {
+
+        ProfileCreateDTO profile = new ProfileCreateDTO();
+        profile.setName(dto.getName());
+        profile.setSurname(dto.getSurname());
+        profile.setMiddleName(dto.getMiddleName());
+        profile.setPassword(dto.getPassword());
+        profile.setRole(ProfileRole.ROLE_USER);
+        profile.setUsername(dto.getUsername());
+        profile.setPhotoId(dto.getAttachId());
+
+        return create(profile);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.company.controller;
 
+import com.company.dto.EmployeeCreateDTO;
 import com.company.dto.ProfileDTO;
 import com.company.dto.ResponseDTO;
 import com.company.dto.profile.ProfileCreateDTO;
@@ -27,10 +28,20 @@ public class ProfileController {
     private AttachService attachService;
 
     @ApiOperation(value = "profile create by admin")
-    @PostMapping("/mod")
-    public ResponseEntity<?> create(@RequestBody ProfileCreateDTO dto) {
+    @PostMapping("/mod/employee")
+    public ResponseEntity<?> create(@RequestBody @Valid EmployeeCreateDTO dto) {
 
-        ResponseDTO response = profileService.create(dto);
+        ResponseDTO response = profileService.createEmp(dto);
+        log.info("Request profile create by admin dto:{}", dto);
+        return ResponseEntity.ok(response);
+    }
+
+
+    @ApiOperation(value = "profile create by admin")
+    @PostMapping("/mod/user")
+    public ResponseEntity<?> createUser(@RequestBody @Valid ProfileCreateDTO dto) {
+
+        ResponseDTO response = profileService.createUser(dto);
         log.info("Request profile create by admin dto:{}", dto);
         return ResponseEntity.ok(response);
     }
